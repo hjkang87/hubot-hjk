@@ -31,10 +31,37 @@ excuse = [
     "Where were you when the program blew up?",
     "It works on my machine."
 ]
+
+excuse_kr = [
+    "희한하네...",
+    "한 번도 그런 적 없는데..",
+    "어제는 됐는데...",
+    "그럴 리가 없는데..?",
+    "하드웨어 문제입니다.",
+    "무슨 짓을 했길래 에러가 떠요?",
+    "인풋에 문제가 있겠죠..",
+    "그 모듈 안건드렸거든요??",
+    "구버전 쓰시는거 아니예요?",
+    "가끔 그럴 수도 있어요..",
+    "일일이 다 테스트를 어떻게 해요.",
+    "그게 꼭 이것 때문이라고 할 수는 없죠..",
+    "될 거예요. 해보진 않았지만..",
+    "누가 내 코드를 건드렸나..?",
+    "백신 깔았어요?",
+    "안되는 건 아는데, 어떤 것 같아요?",
+    "그 버전 쓰시면 당연히 안되죠",
+    "왜 그런식으로 돌려요?",
+    "크래시 날 때 뭐 하고 있었어요?",
+    "제 PC에선 되거든요."
+]
+
 module.exports = (robot) ->
 
     robot.hear /not my fault/i, (res) ->
         res.send res.random excuse
+
+    robot.hear /안돼요/i, (res) ->
+        res.send res.random excuse_kr
 
 
   # robot.hear /badger/i, (res) ->
