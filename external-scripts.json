@@ -10,5 +10,6 @@
   "hubot-shipit",
   "hubot-microsoft-translator",
   "hubot-calculator",
-  "hubot-timezone-converter"
+  "hubot-timezone-converter",
+  "hubot-catme"
 ]
