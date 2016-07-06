@@ -9,5 +9,6 @@
   "hubot-rules",
   "hubot-shipit",
   "hubot-microsoft-translator",
-  "hubot-calculator"
+  "hubot-calculator",
+  "hubot-timezone-converter"
 ]
