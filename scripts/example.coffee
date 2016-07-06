@@ -57,7 +57,7 @@ excuse_kr = [
 
 module.exports = (robot) ->
 
-    robot.hear /not my fault|is broken|is not working|has problem/i, (res) ->
+    robot.hear /not my fault|is broken|is not working|are not working|has problem|have problem/i, (res) ->
         res.send res.random excuse
 
     robot.hear /안돼요/i, (res) ->
