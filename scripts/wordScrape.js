@@ -24,8 +24,8 @@ module.exports = function(robot) {
 
                 results = "";
                 for(i=0; i<words.length; i++) {
-                    results+= words[i] + "\n";
-                    results+= meanings[i] + "\n";
+                    results+= words[i];
+                    results+= meanings[i];
                 }
             }
 
