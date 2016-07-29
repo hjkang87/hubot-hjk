@@ -11,16 +11,19 @@ module.exports = function(robot) {
         console.log(msg.message.text);
         jsdom.env(defaultUrl, function(err, window) {
             var $ = require('jquery')(window);
-
+            var results ="";
             if(err) {
                 console.log(err);
             } else {
+                results += window.$(".w_now2 ul li:first .fl h5").text();
+                results += window.$(".w_now2 ul li:first .fl em").text();
+                results += window.$(".w_now2 ul li:first .fl p").text();
                 console.log(window.$(".w_now2 ul li:first .fl h5").text());
                 console.log(window.$(".w_now2 ul li:first .fl em").text());
                 console.log(window.$(".w_now2 ul li:first .fl p").text());
             }
 
-            //msg.send(results);
+            msg.send(results);
 
         });
     }
