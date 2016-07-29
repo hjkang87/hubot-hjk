@@ -15,20 +15,26 @@ module.exports = function(robot) {
             }
             else {
               //console.log(statusCode, content);
-              msg.reply(content[0].content[0].html);
-              msg.reply(content[1].content[0].html);
+              result = {
+                  "text": "This is a line of text.\nAnd this is another one."
+              }
 
-              msg.reply(content[0].content[1].html);
-              msg.reply(content[1].content[1].html);
+              msg.send(result);
+              
+              msg.send(content[0].content[0].html);
+              msg.send(content[1].content[0].html);
 
-              msg.reply(content[0].content[2].html);
-              msg.reply(content[1].content[2].html);
+              msg.send(content[0].content[1].html);
+              msg.send(content[1].content[1].html);
 
-              msg.reply(content[0].content[3].html);
-              msg.reply(content[1].content[3].html);
+              msg.send(content[0].content[2].html);
+              msg.send(content[1].content[2].html);
 
-              msg.reply(content[0].content[4].html);
-              msg.reply(content[1].content[4].html);
+              msg.send(content[0].content[3].html);
+              msg.send(content[1].content[3].html);
+
+              msg.send(content[0].content[4].html);
+              msg.send(content[1].content[4].html);
 
 
             }
