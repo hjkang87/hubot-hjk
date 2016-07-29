@@ -1,6 +1,6 @@
 {
   "name": "ciri",
-  "version": "4.1.1",
+  "version": "0.0.1",
   "private": true,
   "author": "Hyunjung Kang <kanghyunjung@gmail.com>",
   "description": "for ltv slack",
@@ -25,6 +25,6 @@
     "jquery": ""
   },
   "engines": {
-    "node": "0.10.x"
+    "node": "4.1.1"
   }
 }
