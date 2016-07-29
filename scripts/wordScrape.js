@@ -15,12 +15,12 @@ module.exports = function(robot) {
             }
             else {
               //console.log(statusCode, content);
-              result = {
+              result = JSON.stringify({
                   "text": "This is a line of text.\nAnd this is another one."
-              }
+              })
 
               msg.send(result);
-              
+
               msg.send(content[0].content[0].html);
               msg.send(content[1].content[0].html);
 
