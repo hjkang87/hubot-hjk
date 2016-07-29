@@ -1,45 +1,41 @@
-var Scraper = require('node-scraper')
+var jsdom = require('jsdom');
+var url = 'http://m.wordbook.naver.com/endic/today/words.nhn?targetDate=';
+var selectors = ['.words', '.txt_ct2'];
 
 module.exports = function(robot) {
 
     scrapeWords = function(msg) {
-        //console.log(msg);
 
-        var scraper = new Scraper('http://m.wordbook.naver.com/endic/today/words.nhn?targetDate=', {
-            selectors: ['.words', '.txt_ct2']
-          });
+        jsdom.env(url, function(err, window) {
+            var $ = require('jquery')(window);
 
-          scraper.scrape().on('done', function(err, statusCode, content){
-            if (err){
-              console.error(err);
+            if(err) {
+                console.log(err);
+            } else {
+                words = [];
+                meanings = [];
+
+                window.$(".words").each(function() {
+                    words.push($(this).text());
+                });
+                window.$(".txt_ct2").each(function() {
+                    meanings.push($(this).text());
+                });
+
+                results = "";
+                for(i=0; i<words.length; i++) {
+                    results+= words[i] + "\n";
+                    results+= meanings[i] + "\n";
+                }
             }
-            else {
-              //console.log(statusCode, content);
-              result = JSON.stringify({
-                  "text": "This is a line of text.\nAnd this is another one."
-              })
 
-              msg.send(result);
+            msg.send(results);
 
-              msg.send(content[0].content[0].html);
-              msg.send(content[1].content[0].html);
-
-              msg.send(content[0].content[1].html);
-              msg.send(content[1].content[1].html);
-
-              msg.send(content[0].content[2].html);
-              msg.send(content[1].content[2].html);
-
-              msg.send(content[0].content[3].html);
-              msg.send(content[1].content[3].html);
-
-              msg.send(content[0].content[4].html);
-              msg.send(content[1].content[4].html);
-
-
-            }
-          });
+        });
     }
 
-      robot.hear(/Today\'s Words/ig, scrapeWords);
+    robot.hear(/오늘의 단어/ig, scrapeWords);
+    robot.hear(/단어 주세요/ig, scrapeWords);
+    robot.hear(/today\'s words/ig, scrapeWords);
+
 }
