@@ -67,7 +67,7 @@ module.exports = function(robot) {
     }
 
     findExample = function(msg) {
-        word = msg.match[1];
+        word = msg.match[2];
 
         if(msg.match.length>3 && parseInt(msg.match[3])) {
             num = msg.match[3];
