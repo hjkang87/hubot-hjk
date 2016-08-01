@@ -69,8 +69,8 @@ module.exports = function(robot) {
     findExample = function(msg) {
         word = msg.match[1];
 
-        if(msg.match.length>2 && parseInt(msg.match[2])) {
-            num = msg.match[2];
+        if(msg.match.length>3 && parseInt(msg.match[3])) {
+            num = msg.match[3];
         } else {
             num = 5;
         }
@@ -117,7 +117,10 @@ module.exports = function(robot) {
     robot.hear(/(today|yesterday).*word.*/i, scrapeWords);
     robot.hear(/(단어|word)\D*([\d-]+)/i, scrapeWords);
 
-    robot.hear(/예문 (.*)/i, findExample);
-    robot.hear(/example (\D*)(\d*)/i, findExample);
+    robot.hear(/(예문|example) (\D*)(\d*)/i, findExample);
 
+    robot.hear(/단어봇 사용법/i, function(msg) {
+        response ="```\n(오늘|어제|그제|그저께) 단어: 단어 + 뜻\n(오늘|어제|그제|그저께) 단어만: 단어만\n단어 (주세요|나와라): 오늘의 단어\n단어 yyyy-mm-dd: 해당일자의 단어\n단어만 yyyy-mm-dd: 해당일자의 단어만\n\n(예문|example) 단어 (optional)N: 단어 예문 (N개. default 5개)\n```";
+        msg.reply(response);
+    })
 }
