@@ -115,7 +115,7 @@ module.exports = function(robot) {
     robot.hear(/(오늘|어제|그제|그저께).*단어.*/i, scrapeWords);
     robot.hear(/단어.*(주세요|나와라)/i, scrapeWords);
     robot.hear(/(today|yesterday).*word.*/i, scrapeWords);
-    robot.hear(/([단어|word]\D*)([\d-]+)/i, scrapeWords);
+    robot.hear(/(단어|word)\D*([\d-]+)/i, scrapeWords);
 
     robot.hear(/예문 (.*)/i, findExample);
     robot.hear(/example (\D*)(\d*)/i, findExample);
