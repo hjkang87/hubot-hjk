@@ -2,6 +2,9 @@ var jsdom = require('jsdom');
 
 module.exports = function(robot) {
 
+    capitalizeFirstLetter = function(str) {
+        return str[0].toUpperCase() + str.slice(1);
+    }
     scrapeWords = function(msg) {
 
         var url = 'http://m.wordbook.naver.com/endic/today/words.nhn?targetDate=';
@@ -63,7 +66,7 @@ module.exports = function(robot) {
                     $(this).find("i").each(function() {
                         tmp+= $(this).text() + " ";
                     });
-                    sentences.push(tmp.replace(word, "*"+word+"*"));
+                    sentences.push(tmp.replace(word, "*"+word+"*").replace(capitalizeFirstLetter(word), "*"+capitalizeFirstLetter(word)+"*"));
                 });
 
                 window.$("[class='N=a:xmp.detail']:not(.detail_url_link)").each(function() {
