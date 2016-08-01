@@ -63,7 +63,7 @@ module.exports = function(robot) {
                     $(this).find("i").each(function() {
                         tmp+= $(this).text() + " ";
                     });
-                    sentences.push(tmp);
+                    sentences.push(tmp.replace(word, "*"+word+"*"));
                 });
 
                 window.$("[class='N=a:xmp.detail']:not(.detail_url_link)").each(function() {
