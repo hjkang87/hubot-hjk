@@ -13,18 +13,22 @@ module.exports = function(robot) {
                 console.log(err);
             } else {
                 words = [];
+                phonetics = []
                 meanings = [];
 
                 window.$(".words").each(function() {
-                    words.push($(this).text());
+                    words.push($(this).text().trim());
                 });
+                window.$(".phonetic").each(function() {
+                    words.push($(this).text().trim());
+                })
                 window.$(".txt_ct2").each(function() {
-                    meanings.push($(this).text());
+                    meanings.push($(this).text().trim());
                 });
 
                 results = "";
                 for(i=0; i<words.length; i++) {
-                    results+= words[i] + "\n";
+                    results+= words[i] + " " + phonetics[i] + "\n";
                     results+= meanings[i] + "\n";
                 }
             }
