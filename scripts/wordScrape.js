@@ -84,7 +84,7 @@ module.exports = function(robot) {
         });
 
     }
-
+    //test
     //robot.hear(/test/ig, scrapeWords);
     robot.hear(/오늘의 단어/i, scrapeWords);
     robot.hear(/단어 주세요/i, scrapeWords);
