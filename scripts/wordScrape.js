@@ -17,13 +17,13 @@ module.exports = function(robot) {
                 meanings = [];
 
                 window.$(".words").each(function() {
-                    words.push($(this).text().trim());
+                    words.push($(this).text());
                 });
                 window.$(".phonetic").each(function() {
-                    words.push($(this).text().trim());
+                    phonetics.push($(this).text());
                 })
                 window.$(".txt_ct2").each(function() {
-                    meanings.push($(this).text().trim());
+                    meanings.push($(this).text());
                 });
 
                 results = "";
@@ -32,12 +32,12 @@ module.exports = function(robot) {
                     results+= meanings[i] + "\n";
                 }
             }
-
             msg.send(results);
 
         });
     }
 
+    robot.hear(/test/ig, scrapeWords);
     robot.hear(/오늘의 단어/ig, scrapeWords);
     robot.hear(/단어 주세요/ig, scrapeWords);
     robot.hear(/today\'s words/ig, scrapeWords);
