@@ -56,7 +56,9 @@ module.exports = function(robot) {
                 results = "";
                 for(i=0; i<words.length; i++) {
                     results+= words[i] + " " + phonetics[i] + "\n";
-                    results+= meanings[i] + "\n";
+                    if(!msg.match[0].match(/단어만/)) {
+                        results+= meanings[i] + "\n";
+                    }
                 }
             }
             msg.send(results);
@@ -110,7 +112,7 @@ module.exports = function(robot) {
     }
 
     //robot.hear(/test/ig, scrapeWords);
-    robot.hear(/(오늘|어제|그제|그저께).*단어/i, scrapeWords);
+    robot.hear(/(오늘|어제|그제|그저께).*단어.*/i, scrapeWords);
     robot.hear(/단어.*(주세요|나와라)/i, scrapeWords);
     robot.hear(/(today|yesterday).*word.*/i, scrapeWords);
     robot.hear(/([단어|word]\D*)([\d-]+)/i, scrapeWords);
