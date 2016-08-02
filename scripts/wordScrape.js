@@ -89,8 +89,8 @@ module.exports = function(robot) {
 
                 window.$(".list_a_mar .mar_top01").each(function() {
                     tmp = "";
-                    $(this).find("i").each(function() {
-                        tmp+= $(this).text() + " ";
+                    $(this).find("input").each(function() {
+                        tmp+= $(this).prop('value') + " ";
                     });
                     sentences.push(tmp.replace(word, "*"+word+"*").replace(capitalizeFirstLetter(word), "*"+capitalizeFirstLetter(word)+"*"));
                 });
@@ -129,4 +129,6 @@ module.exports = function(robot) {
 //example AB test
 //example AB
 //example jw
-//SlacK test
+//example SlacK test
+//example CEO
+//example fablous
