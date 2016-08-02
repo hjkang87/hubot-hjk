@@ -26,7 +26,7 @@ module.exports = function(robot) {
             url+= dateToText(t);
         }
 
-        if(msg.match.length>2 && msg.match[2].length>0) {
+        if(msg.match.length>2 && msg.match[2].length>0 && msg.match[2].match(/[\d]+-[\d]+-[\d]+/)) {
             t = new Date(msg.match[2]);
             url+= dateToText(t);
         }
@@ -68,15 +68,24 @@ module.exports = function(robot) {
 
     findExample = function(msg) {
         word = msg.match[2].trim();
+        results = "";
+        sentences = [];
+        translations= [];
+        num = 5;
+
+        if(word.length==0) {
+            msg.send("단어를 제대로 입력하지 않은 것 같아요..");
+            return;
+        }
 
         if(msg.match.length>3 && parseInt(msg.match[3])) {
             num = msg.match[3];
-        } else {
-            num = 5;
         }
 
         url = 'http://endic.naver.com/search_example.nhn?sLn=kr&query='+ encodeURIComponent(word) + '&preQuery=&searchOption=example&forceRedirect=N';
-        console.log(url);
+
+        console.log("url: ", url);
+        console.log("num: ", num);
 
         jsdom.env(url, function(err, window) {
             var $ = require('jquery')(window);
@@ -84,38 +93,35 @@ module.exports = function(robot) {
             if(err) {
                 console.log(err);
             } else {
-                sentences = [];
-                translations= [];
+                window.$(".utb").each(function(i){
+                    //console.log(i);
+                    sen = $(this).find("input[name!='assist']").prop('value');
+                    tran = $(this).find("[class='N=a:xmp.detail']:not(.detail_url_link)").text() || "";
+                    //console.log(sen, tran);
 
-                window.$(".list_a_mar .mar_top01").each(function() {
-                    tmp = "";
-                    $(this).find("input[name!='assist']").each(function() {
-                        tmp+= $(this).prop('value') + " ";
-                    });
-                    sentences.push(tmp.replace(word, "*"+word+"*").replace(capitalizeFirstLetter(word), "*"+capitalizeFirstLetter(word)+"*"));
-                });
-
-                window.$("[class='N=a:xmp.detail']:not(.detail_url_link)").each(function() {
-                    translations.push($(this).text());
+                    sentences.push(sen.replace(word, "*"+word+"*"));
+                    translations.push(tran);
                 });
             }
 
-            results = "";
             for(i=0; i<Math.min(num, sentences.length); i++) {
                 results+= sentences[i] + "\n";
-                results+= translations[i] + "\n";
+                results+= (translations[i] ? translations[i] : "") + "\n";
+            }
+            if (results.length>0) {
+                msg.send(results);
+            } else {
+                msg.send("예문이 없거나 명령어를 잘못 입력한 것 같네요..", url);
             }
 
-            msg.send(results);
         });
 
     }
 
     //robot.hear(/test/ig, scrapeWords);
-    robot.hear(/(오늘|어제|그제|그저께).*단어.*/i, scrapeWords);
-    robot.hear(/단어.*(주세요|나와라)/i, scrapeWords);
-    robot.hear(/(today|yesterday).*word.*/i, scrapeWords);
-    robot.hear(/(단어|word)\D*([\d-]+)/i, scrapeWords);
+    robot.hear(/(오늘|어제|그제|그저께|today|yesterday).*(단어|word).*/i, scrapeWords);
+    robot.hear(/^단어.*(주세요|나와라)/i, scrapeWords);
+    robot.hear(/(단어|word)\D*([\d]+-[\d]+-[\d]+)/i, scrapeWords);
 
     robot.hear(/(예문|example) (\D*)(\d*)/i, findExample);
 
