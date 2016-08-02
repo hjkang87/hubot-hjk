@@ -11,6 +11,27 @@ module.exports = function(robot) {
         return "".concat(date.getFullYear(),".",date.getMonth()+1,".",date.getDate());
     }
 
+    findNumEmoji = function(n) {
+        a = n.toString().split("");
+        h = {
+            1: ":one:",
+            2: ":two:",
+            3: ":three:",
+            4: ":four:",
+            5: ":five:",
+            6: ":six:",
+            7: ":seven:",
+            8: ":eight:",
+            9: ":nine:",
+            0: ":zero:"
+        }
+        result = "";
+        for(var i=0; i<a.length; i++) {
+            result+= h[a[i]];
+        }
+        return result;
+    }
+
     scrapeWords = function(msg) {
         var url = 'http://m.wordbook.naver.com/endic/today/words.nhn?targetDate=';
         message = msg.match[0];
@@ -105,8 +126,9 @@ module.exports = function(robot) {
             }
 
             for(i=0; i<Math.min(num, sentences.length); i++) {
+                results+= findNumEmoji(i+1);
                 results+= sentences[i] + "\n";
-                results+= (translations[i] ? translations[i] : "") + "\n";
+                results+= (translations[i] ? translations[i] : "") + "\n\n";
             }
             if (results.length>0) {
                 msg.send(results);
@@ -132,9 +154,4 @@ module.exports = function(robot) {
 }
 
 //#TODO
-//example AB test
-//example AB
-//example jw
-//example SlacK test
-//example CEO
-//example fablous
+// bold..
