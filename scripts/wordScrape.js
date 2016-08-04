@@ -127,8 +127,8 @@ module.exports = function(robot) {
 
             for(i=0; i<Math.min(num, sentences.length); i++) {
                 results+= findNumEmoji(i+1) + " ";
-                results+= "        " + sentences[i] + "\n";
-                results+= (translations[i] ? translations[i] : "") + "\n\n";
+                results+= sentences[i] + "\n";
+                results+= "        " + (translations[i] ? translations[i] : "") + "\n\n";
             }
             if (results.length>0) {
                 msg.send(results);
