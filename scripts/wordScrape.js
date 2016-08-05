@@ -160,7 +160,7 @@ module.exports = function(robot) {
                 if(window.$(".no-results").length>0) {
                     msg.send("예문이 없거나 명령어를 잘못 입력한 것 같네요..", url);
                 } else {
-                    msg.send(window.$(".def-header:first").text());
+                    msg.send("*"+window.$(".def-header:first").text()+"*");
                     msg.send(window.$(".meaning:first").text());
                     msg.send("```"+window.$(".example:first").text()+"```");
                 }
