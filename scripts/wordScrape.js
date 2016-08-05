@@ -140,12 +140,43 @@ module.exports = function(robot) {
 
     }
 
+    findUrbanDictionary = function(msg) {
+        word = msg.match[2].trim();
+        url = 'http://www.urbandictionary.com/define.php?term=' + encodeURIComponent(word);
+
+        if(word.length==0) {
+            msg.send("단어를 제대로 입력하지 않은 것 같아요..");
+            return;
+        }
+
+        console.log("url: ", url);
+
+        jsdom.env(url, function(err, window) {
+            var $ = require('jquery')(window);
+
+            if(err) {
+                console.log(err);
+            } else {
+                if(window.$(".no-results").length>0) {
+                    msg.send("예문이 없거나 명령어를 잘못 입력한 것 같네요..", url);
+                } else {
+                    msg.send(window.$(".def-header:first").text());
+                    msg.send(window.$(".meaning:first").text());
+                    msg.send("```"+window.$(".example:first").text()+"```");
+                }
+            }
+        });
+
+    }
+
     //robot.hear(/test/ig, scrapeWords);
     robot.hear(/(오늘|어제|그제|그저께|today|yesterday).*(단어|word).*/i, scrapeWords);
     robot.hear(/^단어.*(주세요|나와라)/i, scrapeWords);
     robot.hear(/(단어|word)\D*([\d]+-[\d]+-[\d]+)/i, scrapeWords);
 
     robot.hear(/(예문|example) (\D*)(\d*)/i, findExample);
+
+    robot.hear(/^(ud) (\D*)/i, findUrbanDictionary);
 
     robot.hear(/단어봇 사용법/i, function(msg) {
         response ="```\n(오늘|어제|그제|그저께) 단어: 단어 + 뜻\n(오늘|어제|그제|그저께) 단어만: 단어만\n단어 (주세요|나와라): 오늘의 단어\n단어 yyyy-mm-dd: 해당일자의 단어\n단어만 yyyy-mm-dd: 해당일자의 단어만\n\n(예문|example) 단어 (optional)N: 단어 예문 (N개. default 5개)\n```";
