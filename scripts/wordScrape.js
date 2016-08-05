@@ -162,7 +162,9 @@ module.exports = function(robot) {
                 } else {
                     msg.send("*"+window.$(".def-header:first").text().trim()+"*");
                     msg.send(window.$(".meaning:first").text().trim());
-                    msg.send("```"+window.$(".example:first").text().trim()+"```");
+                    if(window.$(".example:first").length > 0) {
+                        msg.send("```"+window.$(".example:first").text().trim()+"```");
+                    }
                 }
             }
         });
